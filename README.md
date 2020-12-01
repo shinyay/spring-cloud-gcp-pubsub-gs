@@ -1,4 +1,4 @@
-# Name
+# Spring Cloud GCP PubSub Getting Started
 
 Overview
 
