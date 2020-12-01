@@ -3,6 +3,9 @@
 Overview
 
 ## Description
+### Dependencies
+- org.springframework.cloud
+  - spring-cloud-gcp-starter-pubsub
 
 ## Demo
 
