@@ -45,6 +45,16 @@ $ gcloud pubsub subscriptions pull messages-subscription --auto-ack --limit=10
 ```
 
 ## Demo
+### Ahthenticate with Google Cloud
+```shell script
+$ gcloud auth application-default login
+```
+
+#### Updated Authentication Credential
+```shell script
+$ cat ~/.config/gcloud/application_default_credentials.json
+```
+
 ### Publish Message
 ```shell script
 $ curl -X POST -H "Content-Type: application/x-www-form-urlencoded" \
