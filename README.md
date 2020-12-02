@@ -35,10 +35,14 @@ $ gcloud pubsub subscriptions list
 ### Test Messaging
 #### Publish Message
 ```shell script
-$ gcloud pubsub topics publish messages --message="hello" \                                                                                                                    1545ms  2020-12-02 14:17
-    --attribute="origin=gcloud-sample,username=gcp
+$ gcloud pubsub topics publish messages --message="hello" \
+  --attribute="origin=gcloud-sample,username=gcp,publishTime="(date +%Y%m%d-%H%M%S)""
 ```
 
+#### Pull Messages
+```shell script
+$ gcloud pubsub subscriptions pull messages-subscription --auto-ack --limit=10
+```
 
 ## Demo
 
