@@ -7,6 +7,13 @@ Overview
 - org.springframework.cloud
   - spring-cloud-gcp-starter-pubsub
 
+### Enable Cloud PubSub
+```shell script
+$ gcloud services enable pubsub.googleapis.com
+```
+
+### Create Topic
+
 ## Demo
 
 ## Features
