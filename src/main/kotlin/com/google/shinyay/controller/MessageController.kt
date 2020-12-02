@@ -1,6 +1,7 @@
 package com.google.shinyay.controller
 
 import com.google.cloud.spring.pubsub.core.PubSubTemplate
+import com.google.cloud.spring.pubsub.support.AcknowledgeablePubsubMessage
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -16,7 +17,7 @@ class MessageController(val pubSubTemplate: PubSubTemplate) {
     }
 
     @GetMapping("/message")
-    fun viewMessages(@RequestParam subscriptionName: String) {
-        val messages = pubSubTemplate.pull(subscriptionName, 10, true)
+    fun viewMessages(@RequestParam subscriptionName: String): String {
+        return pubSubTemplate.pull(subscriptionName, 10, true).toString()
     }
 }
