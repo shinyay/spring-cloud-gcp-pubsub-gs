@@ -50,6 +50,12 @@ $ gcloud pubsub subscriptions pull messages-subscription --auto-ack --limit=10
 $ curl -X POST -H "Content-Type: application/x-www-form-urlencoded" \
   -d "topicName=messages&message=testdata" localhost:8080/message
 ```
+
+### Pull and Ack Messages
+```shell script
+$ curl -X GET "localhost:8080/message?subscriptionName=messages-subscription"
+```
+
 ## Features
 
 - feature:1
