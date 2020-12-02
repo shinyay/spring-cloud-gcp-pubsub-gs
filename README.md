@@ -45,7 +45,11 @@ $ gcloud pubsub subscriptions pull messages-subscription --auto-ack --limit=10
 ```
 
 ## Demo
-
+### Publish Message
+```shell script
+$ curl -X POST -H "Content-Type: application/x-www-form-urlencoded" \
+  -d "topicName=messages&message=testdata" localhost:8080/message
+```
 ## Features
 
 - feature:1
