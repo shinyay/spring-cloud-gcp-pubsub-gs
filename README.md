@@ -45,7 +45,7 @@ $ gcloud pubsub subscriptions pull messages-subscription --auto-ack --limit=10
 ```
 
 ## Demo
-### Ahthenticate with Google Cloud
+### Authenticate with Google Cloud
 ```shell script
 $ gcloud auth application-default login
 ```
