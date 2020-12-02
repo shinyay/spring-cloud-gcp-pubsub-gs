@@ -13,6 +13,10 @@ $ gcloud services enable pubsub.googleapis.com
 ```
 
 ### Create Topic
+```shell script
+$ gcloud pubsub topics create messages
+```
+
 
 ## Demo
 
