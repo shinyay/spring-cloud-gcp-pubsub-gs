@@ -14,6 +14,7 @@ class MessageController(val pubSubTemplate: PubSubTemplate) {
     @PostMapping("/message")
     fun publishMessage(@RequestParam topicName: String,
                        @RequestParam message: String) {
+        logger.info("Published: $message")
         pubSubTemplate.publish(topicName, message)
     }
 
