@@ -22,6 +22,11 @@ $ gcloud pubsub topics create messages
 $ gcloud pubsub topics list
 ```
 
+### Create Subscription
+```shell script
+$ gcloud pubsub subscriptions create messages-subscription --topic messages
+```
+
 ## Demo
 
 ## Features
