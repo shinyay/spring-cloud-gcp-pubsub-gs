@@ -16,5 +16,7 @@ class MessageController(val pubSubTemplate: PubSubTemplate) {
     }
 
     @GetMapping("/message")
-    fun viewMessages(@RequestParam)
+    fun viewMessages(@RequestParam subscriptionName: String) {
+        val messages = pubSubTemplate.pull(subscriptionName, 10, true)
+    }
 }
