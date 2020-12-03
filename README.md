@@ -55,6 +55,11 @@ $ gcloud auth application-default login
 $ cat ~/.config/gcloud/application_default_credentials.json
 ```
 
+### Create Topic
+```shell script
+$ curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -d "topicName=messages" localhost:8080/topic
+```
+
 ### Publish Message
 ```shell script
 $ curl -X POST -H "Content-Type: application/x-www-form-urlencoded" \
