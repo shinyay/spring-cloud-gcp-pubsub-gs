@@ -68,7 +68,7 @@ $ curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -d "topicNam
 ### Publish Message
 ```shell script
 $ curl -X POST -H "Content-Type: application/x-www-form-urlencoded" \
-  -d "topicName=messages&publishTime="(date +%Y%m%d-%H%M%S)"" localhost:8080/message
+  -d "topicName=messages&message="MSG:(date +%Y%m%d-%H%M%S)"" localhost:8080/message
 ```
 
 ### Pull and Ack Messages
