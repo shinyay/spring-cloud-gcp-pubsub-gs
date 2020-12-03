@@ -11,13 +11,14 @@ class AdminController(val pubSubAdmin: PubSubAdmin) {
 
     @PostMapping("/topic")
     fun createTopic(@RequestParam topicName: String) {
-        pubSubAdmin.createTopic(topicName).
-        logger.info("Create Topic: $topicName")
+        val topic = pubSubAdmin.createTopic(topicName)
+        logger.info("Create Topic: ${topic.name}")
     }
 
     @PostMapping("/subscription")
     fun createSubscription(@RequestParam subscriptionName: String,
                            @RequestParam topicName: String) {
-        pubSubAdmin.createSubscription(subscriptionName, topicName)
+        val subscription = pubSubAdmin.createSubscription(subscriptionName, topicName)
+        logger.info("Created: ${subscription.name}")
     }
 }
