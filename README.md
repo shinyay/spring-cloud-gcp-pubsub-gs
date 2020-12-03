@@ -66,6 +66,11 @@ $ curl -X POST -H "Content-Type: application/x-www-form-urlencoded" \
 $ curl -X GET "localhost:8080/message?subscriptionName=messages-subscription"
 ```
 
+### Delete Subscription
+```shell script
+$ curl -X DELETE "localhost:8080/message?subscriptionName=messages-subscription"
+```
+
 ## Features
 
 - feature:1
