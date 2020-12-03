@@ -71,6 +71,11 @@ $ curl -X GET "localhost:8080/message?subscriptionName=messages-subscription"
 $ curl -X DELETE "localhost:8080/message?subscriptionName=messages-subscription"
 ```
 
+### Delete Topic
+```shell script
+$ curl -X DELETE "localhost:8080/topic?topicName=messages"
+```
+
 ## Features
 
 - feature:1
