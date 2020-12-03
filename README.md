@@ -60,10 +60,15 @@ $ cat ~/.config/gcloud/application_default_credentials.json
 $ curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -d "topicName=messages" localhost:8080/topic
 ```
 
+### Create Subscription
+```shell script
+$ curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -d "topicName=messages&subscriptionName=messages-subscription" localhost:8080/subscription
+```
+
 ### Publish Message
 ```shell script
 $ curl -X POST -H "Content-Type: application/x-www-form-urlencoded" \
-  -d "topicName=messages&message=testdata" localhost:8080/message
+  -d "topicName=messages&publishTime="(date +%Y%m%d-%H%M%S)"" localhost:8080/message
 ```
 
 ### Pull and Ack Messages
