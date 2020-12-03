@@ -27,4 +27,9 @@ class AdminController(val pubSubAdmin: PubSubAdmin) {
     fun deleteTopic(@RequestParam topicName: String) {
         pubSubAdmin.deleteTopic(topicName)
     }
+
+    @DeleteMapping("/subscription")
+    fun deleteSubscription(@RequestParam subscriptionName: String) {
+        pubSubAdmin.deleteSubscription(subscriptionName)
+    }
 }
