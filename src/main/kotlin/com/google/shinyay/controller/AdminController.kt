@@ -32,5 +32,6 @@ class AdminController(val pubSubAdmin: PubSubAdmin) {
     @DeleteMapping("/subscription")
     fun deleteSubscription(@RequestParam subscriptionName: String) {
         pubSubAdmin.deleteSubscription(subscriptionName)
+        logger.info("Deleted: $subscriptionName")
     }
 }
