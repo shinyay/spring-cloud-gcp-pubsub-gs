@@ -4,11 +4,11 @@ import com.google.cloud.ServiceOptions
 import com.google.cloud.pubsub.v1.SubscriptionAdminClient
 import com.google.cloud.pubsub.v1.TopicAdminClient
 import com.google.pubsub.v1.*
+import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.event.annotation.AfterTestClass
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest
@@ -34,7 +34,7 @@ class SpringCloudGcpPubsubGsApplicationTests {
                 10)
     }
 
-    @AfterTestClass
+    @AfterAll
     fun cleanupPubsubClients() {
 
     }
