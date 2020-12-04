@@ -41,7 +41,16 @@ class SpringCloudGcpPubsubGsApplicationTests {
 
     }
 
-
+    private fun deleteSubscriptions(vararg subscriptionNames: String) {
+		for (subscription in subscriptionNames) {
+			val testSubscriptionName = ProjectSubscriptionName.format(
+					projectName, subscription)
+			val projectSubscriptions: MutableList<Any>? = getSubscriptionNamesFromProject()
+			if (projectSubscriptions?.contains(testSubscriptionName) == true) {
+				subscriptionAdminClient.deleteSubscription(testSubscriptionName)
+			}
+		}
+	}
 
 	private fun getSubscriptionNamesFromProject(): MutableList<Any>? {
 		val response = subscriptionAdminClient.listSubscriptions("projects/$projectName")
