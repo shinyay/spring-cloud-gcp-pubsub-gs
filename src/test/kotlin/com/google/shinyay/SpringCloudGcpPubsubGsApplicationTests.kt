@@ -38,7 +38,10 @@ class SpringCloudGcpPubsubGsApplicationTests {
 
     @AfterAll
     fun cleanupPubsubClients() {
-        deleteSubscriptions(subscriptionName)
+//        deleteSubscriptions(subscriptionName)
+//        subscriptionAdminClient.close()
+        deleteTopics(topicName)
+        topicAdminClient.close()
     }
 
     private fun deleteSubscriptions(vararg subscriptionNames: String) {
