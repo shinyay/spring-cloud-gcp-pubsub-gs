@@ -66,6 +66,16 @@ class SpringCloudGcpPubsubGsApplicationTests {
                 .collect(Collectors.toList())
     }
 
+    private fun deleteTopics(vararg topicNames: String) {
+        for (topic in topicNames) {
+            val testTopicName = ProjectTopicName.format(projectName, topic)
+            val projectTopics: MutableList<Any>? = getTopicNamesFromProject()
+            if (projectTopics?.contains(testTopicName) == true) {
+                topicAdminClient.deleteTopic(testTopicName)
+            }
+        }
+    }
+
     @Test
     fun contextLoads() {
     }
