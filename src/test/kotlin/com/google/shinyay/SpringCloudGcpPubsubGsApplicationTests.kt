@@ -28,17 +28,17 @@ class SpringCloudGcpPubsubGsApplicationTests {
         topicAdminClient = TopicAdminClient.create()
         subscriptionAdminClient = SubscriptionAdminClient.create()
 
-        topicAdminClient.createTopic(TopicName.of(projectName, topicName))
-        subscriptionAdminClient.createSubscription(
-                ProjectSubscriptionName.of(projectName, subscriptionName),
-                TopicName.of(projectName, topicName),
-                PushConfig.getDefaultInstance(),
-                10)
+//        topicAdminClient.createTopic(TopicName.of(projectName, topicName))
+//        subscriptionAdminClient.createSubscription(
+//                ProjectSubscriptionName.of(projectName, subscriptionName),
+//                TopicName.of(projectName, topicName),
+//                PushConfig.getDefaultInstance(),
+//                10)
     }
 
     @AfterAll
     fun cleanupPubsubClients() {
-
+        deleteSubscriptions(subscriptionName)
     }
 
     private fun deleteSubscriptions(vararg subscriptionNames: String) {
@@ -55,9 +55,17 @@ class SpringCloudGcpPubsubGsApplicationTests {
 	private fun getSubscriptionNamesFromProject(): MutableList<Any>? {
 		val response = subscriptionAdminClient.listSubscriptions("projects/$projectName")
 		return StreamSupport.stream(response.iterateAll().spliterator(), false)
-				.map<Any>(Subscription::getName)
-				.collect(Collectors.toList<Any>())
+				.map(Subscription::getName)
+				.collect(Collectors.toList())
 	}
+
+    private fun getTopicNamesFromProject(): MutableList<Any>? {
+        val response = topicAdminClient.listTopics("projects/$projectName")
+        return StreamSupport.stream(response.iterateAll().spliterator(), false)
+                .map(Topic::getName)
+                .collect(Collectors.toList())
+    }
+
     @Test
     fun contextLoads() {
     }
