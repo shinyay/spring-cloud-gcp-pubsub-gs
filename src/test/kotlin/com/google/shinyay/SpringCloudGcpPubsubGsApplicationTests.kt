@@ -3,8 +3,7 @@ package com.google.shinyay
 import com.google.cloud.ServiceOptions
 import com.google.cloud.pubsub.v1.SubscriptionAdminClient
 import com.google.cloud.pubsub.v1.TopicAdminClient
-import com.google.pubsub.v1.ProjectName
-import com.google.pubsub.v1.ProjectTopicName
+import com.google.pubsub.v1.*
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
@@ -15,27 +14,32 @@ import org.springframework.test.context.event.annotation.AfterTestClass
 @SpringBootTest
 class SpringCloudGcpPubsubGsApplicationTests {
 
-	lateinit var projectName:String
-	lateinit var topicAdminClient: TopicAdminClient
-	lateinit var subscriptionAdminClient: SubscriptionAdminClient
-	val topicName = "test-topic"
+    lateinit var projectName: String
+    lateinit var topicAdminClient: TopicAdminClient
+    lateinit var subscriptionAdminClient: SubscriptionAdminClient
+    val topicName = "test-topic"
+    val subscriptionName = "test-subscription"
 
-	@BeforeAll
-	fun initAll() {
-		projectName = ProjectName.of(ServiceOptions.getDefaultProjectId()).project
-		topicAdminClient = TopicAdminClient.create()
-		subscriptionAdminClient = SubscriptionAdminClient.create()
+    @BeforeAll
+    fun initAll() {
+        projectName = ProjectName.of(ServiceOptions.getDefaultProjectId()).project
+        topicAdminClient = TopicAdminClient.create()
+        subscriptionAdminClient = SubscriptionAdminClient.create()
 
-		topicAdminClient.createTopic(ProjectTopicName.of(projectName, topicName))
-//		subscriptionAdminClient.createSubscription(projectName, topicName, PushConfig.getDefaultInstance(), 10)
-	}
+        topicAdminClient.createTopic(TopicName.of(projectName, topicName))
+        subscriptionAdminClient.createSubscription(
+                ProjectSubscriptionName.of(projectName, subscriptionName),
+                TopicName.of(projectName, topicName),
+                PushConfig.getDefaultInstance(),
+                10)
+    }
 
-	@AfterTestClass
-	fun cleanupPubsubClients() {
+    @AfterTestClass
+    fun cleanupPubsubClients() {
 
-	}
+    }
 
-//	private fun deleteSubscriptions(vararg testSubscriptions: String) {
+    //	private fun deleteSubscriptions(vararg testSubscriptions: String) {
 //		for (testSubscription in testSubscriptions) {
 //			val testSubscriptionName = ProjectSubscriptionName.format(
 //					projectName, testSubscription)
@@ -51,8 +55,8 @@ class SpringCloudGcpPubsubGsApplicationTests {
 //				.map<Any>(Subscription::getName)
 //				.collect(Collectors.toList<Any>())
 //	}
-	@Test
-	fun contextLoads() {
-	}
+    @Test
+    fun contextLoads() {
+    }
 
 }
