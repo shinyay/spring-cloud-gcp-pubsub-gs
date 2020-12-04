@@ -9,6 +9,8 @@ import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.springframework.boot.test.context.SpringBootTest
+import java.util.stream.Collectors
+import java.util.stream.StreamSupport
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest
@@ -39,22 +41,14 @@ class SpringCloudGcpPubsubGsApplicationTests {
 
     }
 
-    //	private fun deleteSubscriptions(vararg testSubscriptions: String) {
-//		for (testSubscription in testSubscriptions) {
-//			val testSubscriptionName = ProjectSubscriptionName.format(
-//					projectName, testSubscription)
-//			val projectSubscriptions: List<String>? = getSubscriptionNamesFromProject()
-//			if (projectSubscriptions.contains(testSubscriptionName)) {
-//				subscriptionAdminClient.deleteSubscription(testSubscriptionName)
-//			}
-//		}
-//	}
-//	private fun getSubscriptionNamesFromProject(): List<String>? {
-//		val response = subscriptionAdminClient.listSubscriptions("projects/$projectName")
-//		return StreamSupport.stream(response.iterateAll().spliterator(), false)
-//				.map<Any>(Subscription::getName)
-//				.collect(Collectors.toList<Any>())
-//	}
+
+
+	private fun getSubscriptionNamesFromProject(): MutableList<Any>? {
+		val response = subscriptionAdminClient.listSubscriptions("projects/$projectName")
+		return StreamSupport.stream(response.iterateAll().spliterator(), false)
+				.map<Any>(Subscription::getName)
+				.collect(Collectors.toList<Any>())
+	}
     @Test
     fun contextLoads() {
     }
