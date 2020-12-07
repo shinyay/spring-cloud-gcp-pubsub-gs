@@ -20,7 +20,7 @@ class AdminController(val pubSubAdmin: PubSubAdmin) {
     fun createSubscription(@RequestParam subscriptionName: String,
                            @RequestParam topicName: String) {
         val subscription = pubSubAdmin.createSubscription(subscriptionName, topicName)
-        logger.info("Created: ${subscription.name}")
+        logger.info("Created Subscription: ${subscription.name}")
     }
 
     @DeleteMapping("/topic")
