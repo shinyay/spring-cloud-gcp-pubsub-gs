@@ -155,17 +155,17 @@ class SpringCloudGcpPubsubGsApplicationTests() {
         }
     }
 
-//    @Test
-//    @Order(3)
-//    fun deleteTopicByController() {
-//        val testTopicName = "test-topic"
-//        val expectedTopicName = ProjectTopicName.format(projectName, testTopicName)
-//        val url = UriComponentsBuilder.fromHttpUrl("$baseUrl/topic")
-//                .queryParam("topicName", testTopicName)
-//                .toUriString()
-//        testRestTemplate.delete(url)
-//        await.atMost(30, TimeUnit.SECONDS).untilAsserted{
-//            Assertions.assertThat(getTopicNamesFromProject()).doesNotContain(expectedTopicName)
-//        }
-//    }
+    @Test
+    @Order(3)
+    fun deleteTopicByController() {
+        val testTopicName = "test-topic"
+        val expectedTopicName = ProjectTopicName.format(projectName, testTopicName)
+        val url = UriComponentsBuilder.fromHttpUrl("$baseUrl/topic")
+                .queryParam("topicName", testTopicName)
+                .toUriString()
+        testRestTemplate.delete(url)
+        await.atMost(30, TimeUnit.SECONDS).untilAsserted{
+            Assertions.assertThat(getTopicNamesFromProject()).doesNotContain(expectedTopicName)
+        }
+    }
 }
