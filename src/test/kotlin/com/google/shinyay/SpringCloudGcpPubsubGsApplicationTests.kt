@@ -9,12 +9,13 @@ import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.web.client.TestRestTemplate
 import java.util.stream.Collectors
 import java.util.stream.StreamSupport
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest
-class SpringCloudGcpPubsubGsApplicationTests {
+class SpringCloudGcpPubsubGsApplicationTests(val testRestTemplate: TestRestTemplate) {
 
     lateinit var projectName: String
     lateinit var topicAdminClient: TopicAdminClient
