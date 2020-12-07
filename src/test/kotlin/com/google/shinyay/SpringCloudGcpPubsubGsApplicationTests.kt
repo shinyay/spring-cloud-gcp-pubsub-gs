@@ -4,6 +4,8 @@ import com.google.cloud.ServiceOptions
 import com.google.cloud.pubsub.v1.SubscriptionAdminClient
 import com.google.cloud.pubsub.v1.TopicAdminClient
 import com.google.pubsub.v1.*
+import org.assertj.core.api.Assertions
+import org.awaitility.kotlin.await
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
@@ -13,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.boot.web.server.LocalServerPort
 import org.springframework.web.util.UriComponentsBuilder
+import java.util.concurrent.TimeUnit
 import java.util.stream.Collectors
 import java.util.stream.StreamSupport
 
@@ -40,7 +43,6 @@ class SpringCloudGcpPubsubGsApplicationTests() {
 
         createTopics(defaultTopicName)
         createSubscriptions(defaultSubscriptionName, defaultTopicName)
-        createTopicByController("sample-topic")
     }
 
     private fun createTopics(vararg topicNames: String) {
@@ -112,15 +114,16 @@ class SpringCloudGcpPubsubGsApplicationTests() {
                 .collect(Collectors.toList())
     }
 
-    private fun createTopicByController(topicName: String) {
+    @Test
+    fun createTopicByController() {
+        val testTopicName = "test-create-topic"
+        val expectedTopicName = ProjectTopicName.format(projectName, testTopicName)
         val url = UriComponentsBuilder.fromHttpUrl("$baseUrl/topic")
-                .queryParam("topicName", topicName)
+                .queryParam("topicName", testTopicName)
                 .toUriString()
         val response = testRestTemplate.postForEntity(url, null, String::class.java)
+        await.atMost(30, TimeUnit.SECONDS).untilAsserted{
+            Assertions.assertThat(getTopicNamesFromProject()).contains(expectedTopicName)
+        }
     }
-
-    @Test
-    fun contextLoads() {
-    }
-
 }
