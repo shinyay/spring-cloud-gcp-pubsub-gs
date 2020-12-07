@@ -6,10 +6,7 @@ import com.google.cloud.pubsub.v1.TopicAdminClient
 import com.google.pubsub.v1.*
 import org.assertj.core.api.Assertions
 import org.awaitility.kotlin.await
-import org.junit.jupiter.api.AfterAll
-import org.junit.jupiter.api.BeforeAll
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.api.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
@@ -29,8 +26,8 @@ class SpringCloudGcpPubsubGsApplicationTests() {
     lateinit var topicAdminClient: TopicAdminClient
     lateinit var subscriptionAdminClient: SubscriptionAdminClient
     lateinit var baseUrl: String
-    val defaultTopicName = "test-topic"
-    val defaultSubscriptionName = "test-subscription"
+    val defaultTopicName = "default-topic"
+    val defaultSubscriptionName = "defaul-subscription"
     @LocalServerPort
     var testPort = 0
 
@@ -115,8 +112,9 @@ class SpringCloudGcpPubsubGsApplicationTests() {
     }
 
     @Test
+    @Order(1)
     fun createTopicByController() {
-        val testTopicName = "test-create-topic"
+        val testTopicName = "test-topic"
         val expectedTopicName = ProjectTopicName.format(projectName, testTopicName)
         val url = UriComponentsBuilder.fromHttpUrl("$baseUrl/topic")
                 .queryParam("topicName", testTopicName)
@@ -128,15 +126,32 @@ class SpringCloudGcpPubsubGsApplicationTests() {
     }
 
     @Test
-    fun deleteTopicByController() {
-        val testTopicName = "test-create-topic"
-        val expectedTopicName = ProjectTopicName.format(projectName, testTopicName)
-        val url = UriComponentsBuilder.fromHttpUrl("$baseUrl/topic")
+    @Order(2)
+    fun createSubscriptionByController() {
+        val testTopicName = "test-topic"
+        val testSubscriptionName = "test-subscription"
+        val expectedSubscriptionName = ProjectSubscriptionName.format(projectName, testSubscriptionName)
+        val url = UriComponentsBuilder.fromHttpUrl("$baseUrl/subscription")
+                .queryParam("subscriptionName", testSubscriptionName)
                 .queryParam("topicName", testTopicName)
                 .toUriString()
-        testRestTemplate.delete(url)
+        testRestTemplate.postForEntity(url, null, String::class.java)
         await.atMost(30, TimeUnit.SECONDS).untilAsserted{
-            Assertions.assertThat(getTopicNamesFromProject()).doesNotContain(expectedTopicName)
+            Assertions.assertThat(getSubscriptionNamesFromProject()).contains(expectedSubscriptionName)
         }
     }
+
+//    @Test
+//    @Order(3)
+//    fun deleteTopicByController() {
+//        val testTopicName = "test-topic"
+//        val expectedTopicName = ProjectTopicName.format(projectName, testTopicName)
+//        val url = UriComponentsBuilder.fromHttpUrl("$baseUrl/topic")
+//                .queryParam("topicName", testTopicName)
+//                .toUriString()
+//        testRestTemplate.delete(url)
+//        await.atMost(30, TimeUnit.SECONDS).untilAsserted{
+//            Assertions.assertThat(getTopicNamesFromProject()).doesNotContain(expectedTopicName)
+//        }
+//    }
 }
