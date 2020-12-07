@@ -34,8 +34,12 @@ class SpringCloudGcpPubsubGsApplicationTests {
 
     private fun createTopics(vararg topicNames: String) {
         topicNames.forEach {
-            topicAdminClient.createTopic(TopicName.of(projectName, it))
-            logger.info("Cerated Topic: $it")
+            if (getTopicNamesFromProject()?.contains(it) == true) {
+                topicAdminClient.createTopic(TopicName.of(projectName, it))
+                logger.info("Created Topic: $it")
+            } else {
+                logger.info("Already Existed: $it")
+            }
         }
     }
 
