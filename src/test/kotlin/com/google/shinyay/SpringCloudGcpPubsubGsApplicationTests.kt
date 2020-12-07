@@ -156,7 +156,7 @@ class SpringCloudGcpPubsubGsApplicationTests() {
     }
 
     @Test
-    @Order(3)
+    @Order(4)
     fun deleteTopicByController() {
         val testTopicName = "test-topic"
         val expectedTopicName = ProjectTopicName.format(projectName, testTopicName)
