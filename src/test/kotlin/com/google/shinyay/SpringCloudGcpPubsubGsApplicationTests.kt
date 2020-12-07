@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
+import org.springframework.web.util.UriComponentsBuilder
 import java.util.stream.Collectors
 import java.util.stream.StreamSupport
 
@@ -102,6 +103,9 @@ class SpringCloudGcpPubsubGsApplicationTests(val testRestTemplate: TestRestTempl
                 .collect(Collectors.toList())
     }
 
+    private fun createTopicByController(val topicName: String) {
+        val url = UriComponentsBuilder.fromHttpUrl("/topic")
+    }
     @Test
     fun contextLoads() {
     }
