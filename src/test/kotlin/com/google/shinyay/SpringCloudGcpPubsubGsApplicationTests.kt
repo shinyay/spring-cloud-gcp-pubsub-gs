@@ -44,12 +44,16 @@ class SpringCloudGcpPubsubGsApplicationTests {
     }
 
     private fun createSubscriptions(subscriptionName: String, topicName: String) {
-        subscriptionAdminClient.createSubscription(
-                ProjectSubscriptionName.of(projectName, subscriptionName),
-                TopicName.of(projectName, topicName),
-                PushConfig.getDefaultInstance(),
-                10)
-        logger.info("Created Subscription: $subscriptionName")
+        if (getSubscriptionNamesFromProject()?.contains(subscriptionName) == true) {
+            subscriptionAdminClient.createSubscription(
+                    ProjectSubscriptionName.of(projectName, subscriptionName),
+                    TopicName.of(projectName, topicName),
+                    PushConfig.getDefaultInstance(),
+                    10)
+            logger.info("Created Subscription: $subscriptionName")
+        } else {
+            logger.info("Already Existed: $subscriptionName")
+        }
     }
 
     @AfterAll
