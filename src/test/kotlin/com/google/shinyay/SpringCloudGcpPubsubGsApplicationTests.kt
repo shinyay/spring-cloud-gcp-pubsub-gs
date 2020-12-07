@@ -10,25 +10,30 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
+import org.springframework.boot.web.server.LocalServerPort
 import org.springframework.web.util.UriComponentsBuilder
 import java.util.stream.Collectors
 import java.util.stream.StreamSupport
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class SpringCloudGcpPubsubGsApplicationTests(val testRestTemplate: TestRestTemplate) {
 
     lateinit var projectName: String
     lateinit var topicAdminClient: TopicAdminClient
     lateinit var subscriptionAdminClient: SubscriptionAdminClient
+    lateinit var baseUrl: String
     val defaultTopicName = "test-topic"
     val defaultSubscriptionName = "test-subscription"
+    @LocalServerPort
+    var testPort = 0
 
     @BeforeAll
     fun initAll() {
         projectName = ProjectName.of(ServiceOptions.getDefaultProjectId()).project
         topicAdminClient = TopicAdminClient.create()
         subscriptionAdminClient = SubscriptionAdminClient.create()
+        baseUrl = "http://localhost:$testPort"
 
         createTopics(defaultTopicName)
         createSubscriptions(defaultSubscriptionName, defaultTopicName)
@@ -69,7 +74,7 @@ class SpringCloudGcpPubsubGsApplicationTests(val testRestTemplate: TestRestTempl
     private fun deleteSubscriptions(vararg subscriptionNames: String) {
 		for (subscription in subscriptionNames) {
 			val testSubscriptionName = ProjectSubscriptionName.format(
-					projectName, subscription)
+                    projectName, subscription)
 			val projectSubscriptions: MutableList<Any>? = getSubscriptionNamesFromProject()
 			if (projectSubscriptions?.contains(testSubscriptionName) == true) {
 				subscriptionAdminClient.deleteSubscription(testSubscriptionName)
@@ -103,9 +108,10 @@ class SpringCloudGcpPubsubGsApplicationTests(val testRestTemplate: TestRestTempl
                 .collect(Collectors.toList())
     }
 
-    private fun createTopicByController(val topicName: String) {
+    private fun createTopicByController(topicName: String) {
         val url = UriComponentsBuilder.fromHttpUrl("/topic")
     }
+
     @Test
     fun contextLoads() {
     }
