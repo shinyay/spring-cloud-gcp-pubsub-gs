@@ -8,6 +8,7 @@ import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.boot.web.server.LocalServerPort
@@ -17,8 +18,10 @@ import java.util.stream.StreamSupport
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class SpringCloudGcpPubsubGsApplicationTests(val testRestTemplate: TestRestTemplate) {
+class SpringCloudGcpPubsubGsApplicationTests() {
 
+    @Autowired
+    lateinit var testRestTemplate: TestRestTemplate
     lateinit var projectName: String
     lateinit var topicAdminClient: TopicAdminClient
     lateinit var subscriptionAdminClient: SubscriptionAdminClient
@@ -37,6 +40,7 @@ class SpringCloudGcpPubsubGsApplicationTests(val testRestTemplate: TestRestTempl
 
         createTopics(defaultTopicName)
         createSubscriptions(defaultSubscriptionName, defaultTopicName)
+        createTopicByController("sample-topic")
     }
 
     private fun createTopics(vararg topicNames: String) {
@@ -109,7 +113,10 @@ class SpringCloudGcpPubsubGsApplicationTests(val testRestTemplate: TestRestTempl
     }
 
     private fun createTopicByController(topicName: String) {
-        val url = UriComponentsBuilder.fromHttpUrl("/topic")
+        val url = UriComponentsBuilder.fromHttpUrl("$baseUrl/topic")
+                .queryParam("topicName", topicName)
+                .toUriString()
+        val response = testRestTemplate.postForEntity(url, null, String::class.java)
     }
 
     @Test
