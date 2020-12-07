@@ -13,7 +13,7 @@ class AdminController(val pubSubAdmin: PubSubAdmin) {
     @PostMapping("/topic")
     fun createTopic(@RequestParam topicName: String) {
         val topic = pubSubAdmin.createTopic(topicName)
-        logger.info("Create Topic: ${topic.name}")
+        logger.info("Created Topic: ${topic.name}")
     }
 
     @PostMapping("/subscription")
