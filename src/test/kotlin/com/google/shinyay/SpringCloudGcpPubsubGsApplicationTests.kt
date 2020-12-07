@@ -75,13 +75,6 @@ class SpringCloudGcpPubsubGsApplicationTests {
 				.collect(Collectors.toList())
 	}
 
-    private fun getTopicNamesFromProject(): MutableList<Any>? {
-        val response = topicAdminClient.listTopics("projects/$projectName")
-        return StreamSupport.stream(response.iterateAll().spliterator(), false)
-                .map(Topic::getName)
-                .collect(Collectors.toList())
-    }
-
     private fun deleteTopics(vararg topicNames: String) {
         for (topic in topicNames) {
             val testTopicName = ProjectTopicName.format(projectName, topic)
@@ -91,6 +84,13 @@ class SpringCloudGcpPubsubGsApplicationTests {
                 logger.info("Deleted Topic: $testTopicName")
             }
         }
+    }
+
+    private fun getTopicNamesFromProject(): MutableList<Any>? {
+        val response = topicAdminClient.listTopics("projects/$projectName")
+        return StreamSupport.stream(response.iterateAll().spliterator(), false)
+                .map(Topic::getName)
+                .collect(Collectors.toList())
     }
 
     @Test
