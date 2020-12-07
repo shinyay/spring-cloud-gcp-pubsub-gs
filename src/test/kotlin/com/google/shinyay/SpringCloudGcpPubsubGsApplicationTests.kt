@@ -19,8 +19,8 @@ class SpringCloudGcpPubsubGsApplicationTests {
     lateinit var projectName: String
     lateinit var topicAdminClient: TopicAdminClient
     lateinit var subscriptionAdminClient: SubscriptionAdminClient
-    val topicName = "test-topic"
-    val subscriptionName = "test-subscription"
+    val defaultTopicName = "test-topic"
+    val defaultSubscriptionName = "test-subscription"
 
     @BeforeAll
     fun initAll() {
@@ -28,13 +28,8 @@ class SpringCloudGcpPubsubGsApplicationTests {
         topicAdminClient = TopicAdminClient.create()
         subscriptionAdminClient = SubscriptionAdminClient.create()
 
-        createTopics(topicName)
-//        topicAdminClient.createTopic(TopicName.of(projectName, topicName))
-//        subscriptionAdminClient.createSubscription(
-//                ProjectSubscriptionName.of(projectName, subscriptionName),
-//                TopicName.of(projectName, topicName),
-//                PushConfig.getDefaultInstance(),
-//                10)
+        createTopics(defaultTopicName)
+        createSubscriptions(defaultSubscriptionName, defaultTopicName)
     }
 
     private fun createTopics(vararg topicNames: String) {
@@ -44,11 +39,20 @@ class SpringCloudGcpPubsubGsApplicationTests {
         }
     }
 
+    private fun createSubscriptions(subscriptionName: String, topicName: String) {
+        subscriptionAdminClient.createSubscription(
+                ProjectSubscriptionName.of(projectName, subscriptionName),
+                TopicName.of(projectName, topicName),
+                PushConfig.getDefaultInstance(),
+                10)
+        logger.info("Created Subscription: $subscriptionName")
+    }
+
     @AfterAll
     fun cleanupPubsubClients() {
-        deleteSubscriptions(subscriptionName)
+        deleteSubscriptions(defaultSubscriptionName)
         subscriptionAdminClient.close()
-        deleteTopics(topicName)
+        deleteTopics(defaultTopicName)
         topicAdminClient.close()
     }
 
@@ -59,6 +63,7 @@ class SpringCloudGcpPubsubGsApplicationTests {
 			val projectSubscriptions: MutableList<Any>? = getSubscriptionNamesFromProject()
 			if (projectSubscriptions?.contains(testSubscriptionName) == true) {
 				subscriptionAdminClient.deleteSubscription(testSubscriptionName)
+                logger.info("Deleted Subscription: $testSubscriptionName")
 			}
 		}
 	}
@@ -83,6 +88,7 @@ class SpringCloudGcpPubsubGsApplicationTests {
             val projectTopics: MutableList<Any>? = getTopicNamesFromProject()
             if (projectTopics?.contains(testTopicName) == true) {
                 topicAdminClient.deleteTopic(testTopicName)
+                logger.info("Deleted Topic: $testTopicName")
             }
         }
     }
