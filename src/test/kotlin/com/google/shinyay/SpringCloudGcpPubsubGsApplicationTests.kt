@@ -28,12 +28,20 @@ class SpringCloudGcpPubsubGsApplicationTests {
         topicAdminClient = TopicAdminClient.create()
         subscriptionAdminClient = SubscriptionAdminClient.create()
 
+        createTopics(topicName)
 //        topicAdminClient.createTopic(TopicName.of(projectName, topicName))
 //        subscriptionAdminClient.createSubscription(
 //                ProjectSubscriptionName.of(projectName, subscriptionName),
 //                TopicName.of(projectName, topicName),
 //                PushConfig.getDefaultInstance(),
 //                10)
+    }
+
+    private fun createTopics(vararg topicNames: String) {
+        topicNames.forEach {
+            topicAdminClient.createTopic(TopicName.of(projectName, it))
+            logger.info("Cerated Topic: $it")
+        }
     }
 
     @AfterAll
