@@ -121,9 +121,22 @@ class SpringCloudGcpPubsubGsApplicationTests() {
         val url = UriComponentsBuilder.fromHttpUrl("$baseUrl/topic")
                 .queryParam("topicName", testTopicName)
                 .toUriString()
-        val response = testRestTemplate.postForEntity(url, null, String::class.java)
+        testRestTemplate.postForEntity(url, null, String::class.java)
         await.atMost(30, TimeUnit.SECONDS).untilAsserted{
             Assertions.assertThat(getTopicNamesFromProject()).contains(expectedTopicName)
+        }
+    }
+
+    @Test
+    fun deleteTopicByController() {
+        val testTopicName = "test-create-topic"
+        val expectedTopicName = ProjectTopicName.format(projectName, testTopicName)
+        val url = UriComponentsBuilder.fromHttpUrl("$baseUrl/topic")
+                .queryParam("topicName", testTopicName)
+                .toUriString()
+        testRestTemplate.delete(url)
+        await.atMost(30, TimeUnit.SECONDS).untilAsserted{
+            Assertions.assertThat(getTopicNamesFromProject()).doesNotContain(expectedTopicName)
         }
     }
 }
