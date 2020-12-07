@@ -141,6 +141,20 @@ class SpringCloudGcpPubsubGsApplicationTests() {
         }
     }
 
+    @Test
+    @Order(3)
+    fun deleteSubscriptionByController() {
+        val testSubscriptionName = "test-subscription"
+        val expectedSubscriptionName = ProjectSubscriptionName.format(projectName, testSubscriptionName)
+        val url = UriComponentsBuilder.fromHttpUrl("$baseUrl/subscription")
+                .queryParam("subscriptionName", testSubscriptionName)
+                .toUriString()
+        testRestTemplate.delete(url)
+        await.atMost(30, TimeUnit.SECONDS).untilAsserted {
+            Assertions.assertThat(getTopicNamesFromProject()).doesNotContain(expectedSubscriptionName)
+        }
+    }
+
 //    @Test
 //    @Order(3)
 //    fun deleteTopicByController() {
