@@ -160,9 +160,9 @@ class SpringCloudGcpPubsubGsApplicationTests() {
                 .toUriString()
         testRestTemplate.postForEntity(url, null, String::class.java)
     }
-    
-    private fun getMessagesFromSubscription(subscriptionName: String) {
 
+    private fun getMessagesFromSubscription(subscriptionName: String) {
+        val targetSubscriptionName = ProjectSubscriptionName.format(projectName, subscriptionName)
     }
 
     @Test
