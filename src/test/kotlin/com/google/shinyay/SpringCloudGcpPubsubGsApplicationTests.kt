@@ -28,6 +28,7 @@ class SpringCloudGcpPubsubGsApplicationTests() {
     lateinit var baseUrl: String
     val defaultTopicName = "default-topic"
     val defaultSubscriptionName = "defaul-subscription"
+
     @LocalServerPort
     var testPort = 0
 
@@ -75,23 +76,23 @@ class SpringCloudGcpPubsubGsApplicationTests() {
     }
 
     private fun deleteSubscriptions(vararg subscriptionNames: String) {
-		for (subscription in subscriptionNames) {
-			val testSubscriptionName = ProjectSubscriptionName.format(
+        for (subscription in subscriptionNames) {
+            val testSubscriptionName = ProjectSubscriptionName.format(
                     projectName, subscription)
-			val projectSubscriptions: MutableList<Any>? = getSubscriptionNamesFromProject()
-			if (projectSubscriptions?.contains(testSubscriptionName) == true) {
-				subscriptionAdminClient.deleteSubscription(testSubscriptionName)
+            val projectSubscriptions: MutableList<Any>? = getSubscriptionNamesFromProject()
+            if (projectSubscriptions?.contains(testSubscriptionName) == true) {
+                subscriptionAdminClient.deleteSubscription(testSubscriptionName)
                 logger.info("Deleted Subscription: $testSubscriptionName")
-			}
-		}
-	}
+            }
+        }
+    }
 
-	private fun getSubscriptionNamesFromProject(): MutableList<Any>? {
-		val response = subscriptionAdminClient.listSubscriptions("projects/$projectName")
-		return StreamSupport.stream(response.iterateAll().spliterator(), false)
-				.map(Subscription::getName)
-				.collect(Collectors.toList())
-	}
+    private fun getSubscriptionNamesFromProject(): MutableList<Any>? {
+        val response = subscriptionAdminClient.listSubscriptions("projects/$projectName")
+        return StreamSupport.stream(response.iterateAll().spliterator(), false)
+                .map(Subscription::getName)
+                .collect(Collectors.toList())
+    }
 
     private fun deleteTopics(vararg topicNames: String) {
         for (topic in topicNames) {
@@ -120,7 +121,7 @@ class SpringCloudGcpPubsubGsApplicationTests() {
                 .queryParam("topicName", testTopicName)
                 .toUriString()
         testRestTemplate.postForEntity(url, null, String::class.java)
-        await.atMost(30, TimeUnit.SECONDS).untilAsserted{
+        await.atMost(30, TimeUnit.SECONDS).untilAsserted {
             Assertions.assertThat(getTopicNamesFromProject()).contains(expectedTopicName)
         }
     }
@@ -136,7 +137,7 @@ class SpringCloudGcpPubsubGsApplicationTests() {
                 .queryParam("topicName", testTopicName)
                 .toUriString()
         testRestTemplate.postForEntity(url, null, String::class.java)
-        await.atMost(30, TimeUnit.SECONDS).untilAsserted{
+        await.atMost(30, TimeUnit.SECONDS).untilAsserted {
             Assertions.assertThat(getSubscriptionNamesFromProject()).contains(expectedSubscriptionName)
         }
     }
@@ -146,6 +147,10 @@ class SpringCloudGcpPubsubGsApplicationTests() {
 
     }
 
+    private fun postMessage(message: String,
+                            topicName: String) {
+        
+    }
 
     @Test
     @Order(3)
@@ -170,7 +175,7 @@ class SpringCloudGcpPubsubGsApplicationTests() {
                 .queryParam("topicName", testTopicName)
                 .toUriString()
         testRestTemplate.delete(url)
-        await.atMost(30, TimeUnit.SECONDS).untilAsserted{
+        await.atMost(30, TimeUnit.SECONDS).untilAsserted {
             Assertions.assertThat(getTopicNamesFromProject()).doesNotContain(expectedTopicName)
         }
     }
