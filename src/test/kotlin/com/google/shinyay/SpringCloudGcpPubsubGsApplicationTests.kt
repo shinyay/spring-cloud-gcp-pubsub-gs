@@ -164,6 +164,7 @@ class SpringCloudGcpPubsubGsApplicationTests() {
     private fun getMessagesFromSubscription(subscriptionName: String) {
         val targetSubscriptionName = ProjectSubscriptionName.format(projectName, subscriptionName)
         val pullRequest: PullRequest = PullRequest.newBuilder()
+                .setSubscription(targetSubscriptionName)
                 .build()
     }
 
