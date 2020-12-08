@@ -10,6 +10,7 @@ import org.junit.jupiter.api.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
+import org.springframework.boot.test.web.client.postForEntity
 import org.springframework.boot.web.server.LocalServerPort
 import org.springframework.web.util.UriComponentsBuilder
 import java.util.concurrent.TimeUnit
@@ -147,9 +148,13 @@ class SpringCloudGcpPubsubGsApplicationTests() {
 
     }
 
-    private fun postMessage(message: String,
-                            topicName: String) {
-        
+    private fun postMessage(topicName: String,
+                            message: String) {
+        val url = UriComponentsBuilder.fromHttpUrl("$baseUrl/message")
+                .queryParam("topicName", topicName)
+                .queryParam("message", message)
+                .toUriString()
+        testRestTemplate.postForEntity(url, null, String::class.java)
     }
 
     @Test
