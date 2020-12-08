@@ -145,7 +145,11 @@ class SpringCloudGcpPubsubGsApplicationTests() {
 
     @Test
     fun receiveMessageByController() {
-
+        val testMessage = "test-message"
+        val testTopicName = "test-topic"
+        postMessage(testTopicName, testMessage)
+        await.atMost(30, TimeUnit.SECONDS).untilAsserted{
+        }
     }
 
     private fun postMessage(topicName: String,
