@@ -142,6 +142,12 @@ class SpringCloudGcpPubsubGsApplicationTests() {
     }
 
     @Test
+    fun receiveMessageByController() {
+
+    }
+
+
+    @Test
     @Order(3)
     fun deleteSubscriptionByController() {
         val testSubscriptionName = "test-subscription"
