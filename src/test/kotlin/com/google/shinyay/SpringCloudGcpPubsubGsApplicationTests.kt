@@ -144,6 +144,7 @@ class SpringCloudGcpPubsubGsApplicationTests() {
     }
 
     @Test
+    @Order(3)
     fun receiveMessageByController() {
         val testMessage = "test-message"
         val testTopicName = "test-topic"
@@ -177,7 +178,7 @@ class SpringCloudGcpPubsubGsApplicationTests() {
     }
 
     @Test
-    @Order(3)
+    @Order(4)
     fun deleteSubscriptionByController() {
         val testSubscriptionName = "test-subscription"
         val expectedSubscriptionName = ProjectSubscriptionName.format(projectName, testSubscriptionName)
@@ -191,7 +192,7 @@ class SpringCloudGcpPubsubGsApplicationTests() {
     }
 
     @Test
-    @Order(4)
+    @Order(5)
     fun deleteTopicByController() {
         val testTopicName = "test-topic"
         val expectedTopicName = ProjectTopicName.format(projectName, testTopicName)
