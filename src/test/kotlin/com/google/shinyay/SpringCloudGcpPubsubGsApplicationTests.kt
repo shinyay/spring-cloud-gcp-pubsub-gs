@@ -155,6 +155,8 @@ class SpringCloudGcpPubsubGsApplicationTests() {
         await.atMost(30, TimeUnit.SECONDS).untilAsserted{
             Assertions.assertThat(getMessagesFromSubscription(testSubscriptionName)).containsExactly(testMessage)
         }
+        deleteSubscriptions(testSubscriptionName)
+        deleteTopics(testTopicName)
 
     }
 
