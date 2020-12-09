@@ -46,7 +46,7 @@ class SpringCloudGcpPubsubGsApplicationTests() {
 
     private fun createTopics(vararg topicNames: String) {
         topicNames.forEach {
-            if (getTopicNamesFromProject()?.contains(it) == true) {
+            if (getTopicNamesFromProject()?.contains(it) == false) {
                 topicAdminClient.createTopic(TopicName.of(projectName, it))
                 logger.info("Created Topic: $it")
             } else {
@@ -56,7 +56,7 @@ class SpringCloudGcpPubsubGsApplicationTests() {
     }
 
     private fun createSubscriptions(subscriptionName: String, topicName: String) {
-        if (getSubscriptionNamesFromProject()?.contains(subscriptionName) == true) {
+        if (getSubscriptionNamesFromProject()?.contains(subscriptionName) == false) {
             subscriptionAdminClient.createSubscription(
                     ProjectSubscriptionName.of(projectName, subscriptionName),
                     TopicName.of(projectName, topicName),
@@ -155,7 +155,7 @@ class SpringCloudGcpPubsubGsApplicationTests() {
         await.atMost(30, TimeUnit.SECONDS).untilAsserted{
             Assertions.assertThat(getMessagesFromSubscription(testSubscriptionName)).containsExactly(testMessage)
         }
-        
+
     }
 
     private fun postMessage(topicName: String,
