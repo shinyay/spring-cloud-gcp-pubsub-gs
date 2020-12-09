@@ -167,6 +167,7 @@ class SpringCloudGcpPubsubGsApplicationTests() {
                 .setSubscription(targetSubscriptionName)
                 .setMaxMessages(10)
                 .build()
+        val pullResponse = subscriptionAdminClient.stub.pullCallable().call(pullRequest)
     }
 
     @Test
