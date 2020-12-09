@@ -145,6 +145,33 @@ class SpringCloudGcpPubsubGsApplicationTests() {
 
     @Test
     @Order(3)
+    fun deleteSubscriptionByController() {
+        val testSubscriptionName = "test-subscription"
+        val expectedSubscriptionName = ProjectSubscriptionName.format(projectName, testSubscriptionName)
+        val url = UriComponentsBuilder.fromHttpUrl("$baseUrl/subscription")
+                .queryParam("subscriptionName", testSubscriptionName)
+                .toUriString()
+        testRestTemplate.delete(url)
+        await.atMost(30, TimeUnit.SECONDS).untilAsserted {
+            Assertions.assertThat(getTopicNamesFromProject()).doesNotContain(expectedSubscriptionName)
+        }
+    }
+
+    @Test
+    @Order(4)
+    fun deleteTopicByController() {
+        val testTopicName = "test-topic"
+        val expectedTopicName = ProjectTopicName.format(projectName, testTopicName)
+        val url = UriComponentsBuilder.fromHttpUrl("$baseUrl/topic")
+                .queryParam("topicName", testTopicName)
+                .toUriString()
+        testRestTemplate.delete(url)
+        await.atMost(30, TimeUnit.SECONDS).untilAsserted {
+            Assertions.assertThat(getTopicNamesFromProject()).doesNotContain(expectedTopicName)
+        }
+    }
+
+    @Test
     fun receiveMessageByController() {
         val testMessage = "test-post-message"
         val testTopicName = "test-post-topic"
@@ -180,33 +207,5 @@ class SpringCloudGcpPubsubGsApplicationTests() {
                 .map {
                     receivedMessage -> receivedMessage.message.data.toStringUtf8()
                 }.collect(Collectors.toList())
-    }
-
-    @Test
-    @Order(4)
-    fun deleteSubscriptionByController() {
-        val testSubscriptionName = "test-subscription"
-        val expectedSubscriptionName = ProjectSubscriptionName.format(projectName, testSubscriptionName)
-        val url = UriComponentsBuilder.fromHttpUrl("$baseUrl/subscription")
-                .queryParam("subscriptionName", testSubscriptionName)
-                .toUriString()
-        testRestTemplate.delete(url)
-        await.atMost(30, TimeUnit.SECONDS).untilAsserted {
-            Assertions.assertThat(getTopicNamesFromProject()).doesNotContain(expectedSubscriptionName)
-        }
-    }
-
-    @Test
-    @Order(5)
-    fun deleteTopicByController() {
-        val testTopicName = "test-topic"
-        val expectedTopicName = ProjectTopicName.format(projectName, testTopicName)
-        val url = UriComponentsBuilder.fromHttpUrl("$baseUrl/topic")
-                .queryParam("topicName", testTopicName)
-                .toUriString()
-        testRestTemplate.delete(url)
-        await.atMost(30, TimeUnit.SECONDS).untilAsserted {
-            Assertions.assertThat(getTopicNamesFromProject()).doesNotContain(expectedTopicName)
-        }
     }
 }
