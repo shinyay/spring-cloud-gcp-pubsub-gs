@@ -161,13 +161,17 @@ class SpringCloudGcpPubsubGsApplicationTests() {
         testRestTemplate.postForEntity(url, null, String::class.java)
     }
 
-    private fun getMessagesFromSubscription(subscriptionName: String) {
+    private fun getMessagesFromSubscription(subscriptionName: String): MutableList<String>? {
         val targetSubscriptionName = ProjectSubscriptionName.format(projectName, subscriptionName)
         val pullRequest: PullRequest = PullRequest.newBuilder()
                 .setSubscription(targetSubscriptionName)
                 .setMaxMessages(10)
                 .build()
         val pullResponse = subscriptionAdminClient.stub.pullCallable().call(pullRequest)
+        return pullResponse.receivedMessagesList.stream()
+                .map {
+                    receivedMessage -> receivedMessage.message.data.toStringUtf8()
+                }.collect(Collectors.toList())
     }
 
     @Test
