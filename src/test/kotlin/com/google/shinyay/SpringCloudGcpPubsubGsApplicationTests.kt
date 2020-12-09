@@ -122,6 +122,7 @@ class SpringCloudGcpPubsubGsApplicationTests() {
                 .queryParam("topicName", testTopicName)
                 .toUriString()
         testRestTemplate.postForEntity(url, null, String::class.java)
+        logger.info("Created Topic: $testTopicName")
         await.atMost(30, TimeUnit.SECONDS).untilAsserted {
             Assertions.assertThat(getTopicNamesFromProject()).contains(expectedTopicName)
         }
