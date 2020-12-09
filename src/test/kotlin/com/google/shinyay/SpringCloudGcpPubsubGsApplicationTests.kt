@@ -147,8 +147,10 @@ class SpringCloudGcpPubsubGsApplicationTests() {
     fun receiveMessageByController() {
         val testMessage = "test-message"
         val testTopicName = "test-topic"
+        val testSubscriptionName = "test-subscription"
         postMessage(testTopicName, testMessage)
         await.atMost(30, TimeUnit.SECONDS).untilAsserted{
+            Assertions.assertThat(getMessagesFromSubscription(testSubscriptionName)).containsExactly(testMessage)
         }
     }
 
