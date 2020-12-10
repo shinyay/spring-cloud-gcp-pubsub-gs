@@ -1,11 +1,13 @@
 package com.google.shinyay.controller
 
 import com.google.cloud.spring.pubsub.PubSubAdmin
+import com.google.pubsub.v1.Topic
+import com.google.pubsub.v1.TopicName
 import com.google.shinyay.logger
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
+import java.util.function.Function
+import java.util.stream.Collectors
+
 
 @RestController
 class AdminController(val pubSubAdmin: PubSubAdmin) {
@@ -21,6 +23,15 @@ class AdminController(val pubSubAdmin: PubSubAdmin) {
                            @RequestParam topicName: String) {
         val subscription = pubSubAdmin.createSubscription(subscriptionName, topicName)
         logger.info("Created Subscription: ${subscription.name}")
+    }
+
+    @GetMapping("/topic")
+    fun listTopics(): List<String>? {
+        return pubSubAdmin
+                .listTopics()
+                .stream()
+                .map(Topic::getName)
+                .collect(Collectors.toList<String>())
     }
 
     @DeleteMapping("/topic")
