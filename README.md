@@ -54,6 +54,11 @@ It allows for the **creation**, **deletion** and **listing** of topics and subsc
 class AdminController(val pubSubAdmin: PubSubAdmin)
 ```
 
+#### Create Topic
+```kotlin
+pubSubAdmin.createTopic("topicName")
+```
+
 ## Demo
 ### Authenticate with Google Cloud
 ```shell script
