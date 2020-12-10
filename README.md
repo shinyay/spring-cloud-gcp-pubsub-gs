@@ -91,6 +91,13 @@ fun listTopics(): List<String>? {
 #### List Subscriptions
 - `listSubscriptions(): List<Subscription>`
 
+```kotlin
+fun listSubscriptions(): MutableList<String> = pubSubAdmin.listSubscriptions()
+        .stream()
+        .map(Subscription::getName)
+        .collect(Collectors.toList())
+```
+
 #### Delete Topic
 - `deleteTopic(String topicName)`
 
