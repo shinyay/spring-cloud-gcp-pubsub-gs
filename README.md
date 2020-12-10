@@ -71,6 +71,9 @@ class AdminController(val pubSubAdmin: PubSubAdmin)
 #### Delete Topic
 - `deleteTopic(String topicName)`
 
+#### Delete Subscription
+- `deleteSubscription(String subscriptionName)`
+
 ## Demo
 ### Authenticate with Google Cloud
 ```shell script
