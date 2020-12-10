@@ -45,6 +45,10 @@ $ gcloud pubsub topics publish messages --message="hello" \
 $ gcloud pubsub subscriptions pull messages-subscription --auto-ack --limit=10
 ```
 
+### PubSubAdmin
+`PubSubAdmin` is the abstraction provided by Spring Cloud GCP to manage Google Cloud Pub/Sub resources.
+It allows for the **creation**, **deletion** and **listing** of topics and subscriptions.
+
 ## Demo
 ### Authenticate with Google Cloud
 ```shell script
