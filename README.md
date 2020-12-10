@@ -78,6 +78,16 @@ fun createSubscription(@RequestParam subscriptionName: String,
 #### List Topics
 - `listTopics(): List<Topic>`
 
+```kotlin
+fun listTopics(): List<String>? {
+    return pubSubAdmin
+            .listTopics()
+            .stream()
+            .map(Topic::getName)
+            .collect(Collectors.toList<String>())
+    }
+```
+
 #### List Subscriptions
 - `listSubscriptions(): List<Subscription>`
 
