@@ -1,6 +1,6 @@
 # Spring Cloud GCP PubSub Getting Started
 
-Overview
+Cloud Pub/Sub is an asynchronous messaging service that decouples services that produce events from services that process events.
 
 ## Description
 ### Dependencies
