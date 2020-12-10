@@ -65,6 +65,9 @@ class AdminController(val pubSubAdmin: PubSubAdmin)
 #### List Topics
 - `listTopics(): List<Topic>`
 
+#### List Subscriptions
+- `listSubscriptions(): List<Subscription>`
+
 ## Demo
 ### Authenticate with Google Cloud
 ```shell script
