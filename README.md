@@ -9,12 +9,12 @@ Spring Cloud GCP for Pub/Sub is an abstraction allows Spring to use Cloud Pub/Su
   - spring-cloud-gcp-starter-pubsub
 
 ### Operate Cloud PubSub by gcloud CLI
-### Enable Cloud PubSub
+#### Enable Cloud PubSub
 ```shell script
 $ gcloud services enable pubsub.googleapis.com
 ```
 
-### Create Topic
+#### Create Topic
 ```shell script
 $ gcloud pubsub topics create messages
 ```
@@ -24,7 +24,7 @@ $ gcloud pubsub topics create messages
 $ gcloud pubsub topics list
 ```
 
-### Create Subscription
+#### Create Subscription
 ```shell script
 $ gcloud pubsub subscriptions create messages-subscription --topic messages
 ```
@@ -34,7 +34,6 @@ $ gcloud pubsub subscriptions create messages-subscription --topic messages
 $ gcloud pubsub subscriptions list
 ```
 
-### Test Messaging
 #### Publish Message
 ```shell script
 $ gcloud pubsub topics publish messages --message="hello" \
