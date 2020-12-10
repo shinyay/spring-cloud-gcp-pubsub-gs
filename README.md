@@ -68,6 +68,13 @@ fun createTopic(@RequestParam topicName: String) {
 - `createSubscription(String subscriptionName, String topicName, Integer ackDeadline) :Subscription`
 - `createSubscription(String subscriptionName, String topicName, Integer ackDeadline, String pushEndpoint): Subscription`
 
+```kotlin
+fun createSubscription(@RequestParam subscriptionName: String,
+                       @RequestParam topicName: String) {
+    pubSubAdmin.createSubscription(subscriptionName, topicName)
+}
+```
+
 #### List Topics
 - `listTopics(): List<Topic>`
 
