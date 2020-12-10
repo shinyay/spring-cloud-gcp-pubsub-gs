@@ -59,6 +59,12 @@ class AdminController(val pubSubAdmin: PubSubAdmin)
 pubSubAdmin.createTopic("topicName")
 ```
 
+#### Create Subscription
+- `createSubscription(String subscriptionName, String topicName): Subscription`
+- `createSubscription(String subscriptionName, String topicName, Integer ackDeadline) :Subscription`
+- `createSubscription(String subscriptionName, String topicName, Integer ackDeadline, String pushEndpoint): Subscription`
+
+
 ## Demo
 ### Authenticate with Google Cloud
 ```shell script
