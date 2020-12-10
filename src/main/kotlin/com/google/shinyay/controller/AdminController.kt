@@ -1,6 +1,7 @@
 package com.google.shinyay.controller
 
 import com.google.cloud.spring.pubsub.PubSubAdmin
+import com.google.pubsub.v1.Subscription
 import com.google.pubsub.v1.Topic
 import com.google.pubsub.v1.TopicName
 import com.google.shinyay.logger
@@ -26,13 +27,19 @@ class AdminController(val pubSubAdmin: PubSubAdmin) {
     }
 
     @GetMapping("/topic")
-    fun listTopics(): List<String>? {
+    fun listTopics(): MutableList<String>? {
         return pubSubAdmin
                 .listTopics()
                 .stream()
                 .map(Topic::getName)
                 .collect(Collectors.toList<String>())
     }
+
+    @GetMapping("/subscription")
+    fun listSubscriptions(): MutableList<String> = pubSubAdmin.listSubscriptions()
+            .stream()
+            .map(Subscription::getName)
+            .collect(Collectors.toList())
 
     @DeleteMapping("/topic")
     fun deleteTopic(@RequestParam topicName: String) {
