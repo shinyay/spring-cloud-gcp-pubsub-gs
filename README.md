@@ -84,6 +84,12 @@ fun createSubscription(@RequestParam subscriptionName: String,
 #### Delete Topic
 - `deleteTopic(String topicName)`
 
+```kotlin
+fun deleteTopic(@RequestParam topicName: String) {
+    pubSubAdmin.deleteTopic(topicName)
+}
+```
+
 #### Delete Subscription
 - `deleteSubscription(String subscriptionName)`
 
