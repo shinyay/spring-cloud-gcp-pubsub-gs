@@ -55,15 +55,15 @@ class AdminController(val pubSubAdmin: PubSubAdmin)
 ```
 
 #### Create Topic
-```kotlin
-pubSubAdmin.createTopic("topicName")
-```
+- `createTopic(String topicName): Topic`
 
 #### Create Subscription
 - `createSubscription(String subscriptionName, String topicName): Subscription`
 - `createSubscription(String subscriptionName, String topicName, Integer ackDeadline) :Subscription`
 - `createSubscription(String subscriptionName, String topicName, Integer ackDeadline, String pushEndpoint): Subscription`
 
+#### List Topics
+- `listTopics(): List<Topic>`
 
 ## Demo
 ### Authenticate with Google Cloud
