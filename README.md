@@ -93,6 +93,12 @@ fun deleteTopic(@RequestParam topicName: String) {
 #### Delete Subscription
 - `deleteSubscription(String subscriptionName)`
 
+```kotlin
+fun deleteSubscription(@RequestParam subscriptionName: String) {
+    pubSubAdmin.deleteSubscription(subscriptionName)
+}
+```
+
 ## Demo
 ### Authenticate with Google Cloud
 ```shell script
