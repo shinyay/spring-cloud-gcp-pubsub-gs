@@ -57,6 +57,12 @@ class AdminController(val pubSubAdmin: PubSubAdmin)
 #### Create Topic
 - `createTopic(String topicName): Topic`
 
+```kotlin
+fun createTopic(@RequestParam topicName: String) {
+    pubSubAdmin.createTopic(topicName)
+}
+```
+
 #### Create Subscription
 - `createSubscription(String subscriptionName, String topicName): Subscription`
 - `createSubscription(String subscriptionName, String topicName, Integer ackDeadline) :Subscription`
